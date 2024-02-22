@@ -8,6 +8,7 @@ export default {
 			white: "#FFFFFF",
 			graycolor: "#000000",
 			dimcolor: "rgba(255, 255, 255, 0.8)",
+			red: "#fa0f0f",
 		},
 		extend: {},
 	},

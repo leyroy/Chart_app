@@ -2,11 +2,12 @@ import React from "react";
 import { categories, searched } from "../assets/staticData";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Home() {
 	return (
 		<div className="">
-			<div className=" w-full flex flex-col items-center justify-center gap-3 py-10 text-white bg-logocolor mx-auto ">
+			<div className=" w-full flex flex-col px-3 items-center justify-center gap-3 py-10 text-white bg-logocolor mx-auto ">
 				<p className="text-3xl font-bold">
 					Find a career you will love
 				</p>
@@ -52,7 +53,7 @@ export default function Home() {
 					))}
 				</div>
 			</div>
-			<div className="md:w-3/4 px-3 mx-auto mt-4">
+			<div className="md:w-3/4 px-3 mx-auto my-4">
 				<h1 className="md:text-2xl text-lg font-semibold capitalize">
 					Frequently searched Careers
 				</h1>

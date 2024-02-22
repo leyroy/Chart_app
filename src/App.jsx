@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import Layout from "./components/Layout";
 import store from "./Store/Store";
 import Home from "./pages/Home";
+import AuthPage from "./pages/AuthPage";
 
 const router = createBrowserRouter([
 	{
@@ -21,14 +22,14 @@ const router = createBrowserRouter([
 			},
 		],
 	},
+	{
+		path: "/signin",
+		element: <AuthPage />,
+	},
 ]);
 
 function App() {
-	return (
-		<Provider store={store}>
-			<RouterProvider router={router} />
-		</Provider>
-	);
+	return <RouterProvider router={router} />;
 }
 
 export default App;

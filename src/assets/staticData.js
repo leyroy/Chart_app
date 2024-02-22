@@ -11,6 +11,10 @@ export const navs = [
 		id: "about",
 		name: "About",
 	},
+	{
+		id: "jobs",
+		name: "Jobs",
+	},
 ];
 
 export const categories = [
@@ -142,7 +146,7 @@ export const searched = [
 		name: "Firefighter",
 	},
 	{
-		id: 11,
+		id: 36,
 		name: "Data Analyst",
 	},
 	{
@@ -193,11 +197,11 @@ export const Company = [
 		name: "Engineering",
 	},
 	{
-		id: 1,
+		id: 2,
 		name: "Marketing",
 	},
 	{
-		id: 1,
+		id: 3,
 		name: "Web developer",
 	},
 ];
