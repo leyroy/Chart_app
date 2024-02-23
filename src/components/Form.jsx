@@ -2,13 +2,19 @@ import React from "react";
 import { fadeInOut } from "../utils/animations";
 import { motion } from "framer-motion";
 
-export default function Form({ type, name, lable }) {
+export default function Form({
+	type,
+	name,
+	lable,
+	handleIputChange,
+}) {
 	return (
-		<div className="relative hidden w-full py-2 border rounded md:block border-logocolor">
+		<div className="relative w-full py-2 border rounded border-logocolor">
 			<input
 				required
 				type={type}
 				name={name}
+				onChange={(e) => handleIputChange(e)}
 				id={name}
 				className="w-full px-4 text-lg font-semibold focus:outline-0 text-textColor peer"
 			/>
@@ -22,7 +28,7 @@ export default function Form({ type, name, lable }) {
 				{...fadeInOut}
 				className="absolute right-0 font-serif text-sm -top-5 text-red"
 			>
-				error here...
+				erroe
 			</motion.p>
 		</div>
 	);

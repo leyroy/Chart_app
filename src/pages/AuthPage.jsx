@@ -7,11 +7,60 @@ import {
 	clickEffect,
 	fadeInOut,
 } from "../utils/animations";
+import { signUp, login } from "../apis/main";
 
 export default function AuthPage() {
+	const [userDAta, setUserData] = useState({});
 	const [isLogin, setIsLogin] = useState(true);
+	const [whileLoading, setWhileLoading] = useState(false);
+	const [alertMg, setAertMG] = useState("");
 	const user = useSelector((state) => state.user);
 
+	const handleIputChange = (e) => {
+		setUserData({
+			...userDAta,
+			[e.target.name]: e.target.value,
+		});
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(userDAta);
+	};
+	const handleRegister = async () => {
+		if (
+			!userDAta.fullname === "" ||
+			!userDAta.email === "" ||
+			!userDAta.password === ""
+		) {
+			setAertMG("all filds are requid");
+			setTimeout(() => {
+				setAertMG("");
+			}, 3000);
+			return;
+		}
+		if (userDAta.password !== userDAta.confirmPassword) {
+			setAertMG("passwords does not much");
+			setTimeout(() => {
+				setAertMG("");
+			}, 3000);
+			return;
+		}
+		setWhileLoading(true);
+		const response = await signUp(userDAta);
+		console.log(response);
+	};
+	const handleLogin = async () => {
+		if (!userDAta.email === "" || !userDAta.password === "") {
+			setAertMG("all filds are requid");
+			setTimeout(() => {
+				setAertMG("");
+			}, 3000);
+			return;
+		}
+		setWhileLoading(true);
+		const response = await login(userDAta);
+		console.log(response);
+	};
 	if (user) {
 		return (
 			<Navigate
@@ -21,52 +70,77 @@ export default function AuthPage() {
 		);
 	}
 	return (
-		<div className="flex w-screen h-screen bg-dimcolor">
-			<div className="flex w-4/5 m-auto my-auto shadow-2xl h-4/5 ">
-				<section className="flex-1 bg-logocolor"></section>
-				<section className="flex flex-col flex-1 px-6 my-2 ">
+		<div className="flex flex-col w-screen h-screen bg-dimcolor">
+			<div className="flex w-full p-3 m-auto my-auto shadow-2xl md:p-0 md:w-4/5 h-4/5 ">
+				<section className="hidden md:flex-1 md:block bg-logocolor"></section>
+				<section className="flex flex-col w-full px-1 my-2 md:flex-1 md:px-6 ">
 					<h1 className="mx-auto mb-4 text-3xl font-semibold text-logocolor ">
 						{isLogin ? "Log in" : "Register"}
 					</h1>
-					<form className="flex flex-col p-3 gap-7">
+					<form
+						onSubmit={handleSubmit}
+						className="relative flex flex-col w-ful md:p-3 gap-7"
+					>
+						<p className="absolute -top-4 text-red">{alertMg}</p>
 						{!isLogin && (
-							<motion.div {...fadeInOut}>
+							<motion.div
+								{...fadeInOut}
+								className="w-full"
+							>
 								<Form
 									{...fadeInOut}
+									handleIputChange={handleIputChange}
 									name={"fullname"}
 									type={"text"}
 									lable={"Full Name"}
 								/>
 							</motion.div>
 						)}
-
 						<Form
-							name={"email"}
+							name={"emai"}
 							type={"email"}
 							lable={"Email"}
+							handleIputChange={handleIputChange}
 						/>
 						<Form
 							name={"password"}
 							type={"password"}
 							lable={"Password"}
+							handleIputChange={handleIputChange}
 						/>
 						{!isLogin && (
 							<motion.div {...fadeInOut}>
 								<Form
 									name={"confirmPassword"}
+									handleIputChange={handleIputChange}
 									type={"password"}
 									lable={"Confirm Password"}
 								/>
 							</motion.div>
 						)}
-						<motion.button
-							{...clickEffect}
-							type="submit"
-							className="px-2 py-2 text-lg font-medium text-white rounded-md md:px-4 bg-logocolor"
-						>
-							{" "}
-							{isLogin ? "Log in" : "Sign Up"}{" "}
-						</motion.button>
+						{isLogin ? (
+							<motion.button
+								{...clickEffect}
+								{...fadeInOut}
+								onClick={handleLogin}
+								type="submit"
+								className="px-2 py-2 text-lg font-medium text-white rounded-md md:px-4 bg-logocolor"
+							>
+								{" "}
+								Log in
+							</motion.button>
+						) : (
+							<motion.button
+								{...clickEffect}
+								{...fadeInOut}
+								onClick={handleRegister}
+								type="submit"
+								className="px-2 py-2 text-lg font-medium text-white rounded-md md:px-4 bg-logocolor"
+							>
+								{" "}
+								Sign Up
+							</motion.button>
+						)}
 						{isLogin ? (
 							<p
 								className="-mt-6 font-serif text-sm font-normal text-textColor"
@@ -95,6 +169,9 @@ export default function AuthPage() {
 					</form>
 				</section>
 			</div>
+			<p className="w-full text-center h-14 bg-logocolor text-red ">
+				need help? check here!
+			</p>
 		</div>
 	);
 }
